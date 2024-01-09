@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GitHub Repository</title>
+</head>
+<body>
+    <h1>My GitHub Repository</h1>
+    <ul id="repo-list"></ul>
+
+    <script>
+        // GitHub username and repository name
+        const username = "your-username";
+        const repoName = "your-repository";
+
+        // Fetch repository information from GitHub API
+        fetch(`https://api.github.com/repos/${username}/${repoName}/contents`)
+            .then(response => response.json())
+            .then(data => {
+                const repoList = document.getElementById("repo-list");
+
+                // Iterate through the repository content and create list items
+                data.forEach(item => {
+                    const listItem = document.createElement("li");
+                    const link = document.createElement("a");
+
+                    link.href = item.html_url;
+                    link.textContent = item.name;
+
+                    listItem.appendChild(link);
+                    repoList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>
